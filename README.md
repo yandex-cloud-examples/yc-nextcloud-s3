@@ -1,5 +1,8 @@
-# Название сценария
+# Развертывание Nextcloud на виртуальной машине или в группе виртуальных машин Yandex Compute Cloud в интеграции с Yandex Object Storage
 
-Описание сценария и инструкция по его применению.
+В этом руководстве вы подключите [бакет](https://yandex.cloud/ru/docs/storage/concepts/bucket) Object Storage к решению Nextcloud, развернутому на [виртуальной машине](https://yandex.cloud/ru/docs/compute/concepts/vm) Compute Cloud с базой данных в [кластере](https://yandex.cloud/ru/docs/managed-mysql/concepts/) Yandex Managed Service for MySQL®. Для обеспечения отказоустойчивости и избыточности создаваемой под Nextcloud инфраструктуры вы масштабируете Nextcloud на [группу виртуальных машин](https://yandex.cloud/ru/docs/compute/concepts/instance-groups/) с распределением нагрузки при помощи [L7-балансировщика](https://yandex.cloud/ru/docs/application-load-balancer/concepts/application-load-balancer) Yandex Application Load Balancer. В отказоустойчивой конфигурации Nextcloud будет доступен по доменному имени, для которого в Yandex Certificate Manager будет выпущен [TLS-сертификат](https://yandex.cloud/ru/docs/certificate-manager/concepts/managed-certificate).
 
-Для практических руководств обязательна ссылка на документацию.
+Подготовка инфраструктуры для статического сайта описана в [практическом руководстве](https://yandex.cloud/ru/docs/tutorials/archive/integrate-nextcloud/terraform), необходимые для настройки конфигурационные файлы расположены в этом репозитории:
+* [nextcloud-integrate-storage-basic-config.tf](nextcloud-integrate-storage-basic-config.tf) — файл конфигурации создаваемой инфраструктуры в базовом варианте.
+* [nextcloud-integrate-storage.auto.tfvars](nextcloud-integrate-storage.auto.tfvars) — файл с значениями пользовательских переменных.
+* [failsafe/nextcloud-integrate-storage-failsafe-config.tf](failsafe/nextcloud-integrate-storage-failsafe-config.tf) — файл конфигурации создаваемой инфраструктуры в отказоустойчивом варианте.
