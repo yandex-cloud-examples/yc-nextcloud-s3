@@ -4,5 +4,5 @@
 
 Подготовка инфраструктуры для статического сайта описана в [практическом руководстве](https://yandex.cloud/ru/docs/tutorials/archive/integrate-nextcloud/terraform), необходимые для настройки конфигурационные файлы расположены в этом репозитории:
 * [nextcloud-integrate-storage-basic-config.tf](nextcloud-integrate-storage-basic-config.tf) — файл конфигурации создаваемой инфраструктуры в базовом варианте.
-* [nextcloud-integrate-storage.auto.tfvars](nextcloud-integrate-storage.auto.tfvars) — файл с значениями пользовательских переменных.
+* [nextcloud-integrate-storage.auto.tfvars](nextcloud-integrate-storage.auto.tfvars) — файл со значениями пользовательских переменных.
 * [failsafe/nextcloud-integrate-storage-failsafe-config.tf](failsafe/nextcloud-integrate-storage-failsafe-config.tf) — файл конфигурации создаваемой инфраструктуры в отказоустойчивом варианте.
