@@ -25,10 +25,10 @@ locals {
   sa_name             = "nextcloud-sa"
   network_name        = "nextcloud-network"
   subnet_a_name       = "nextcloud-subnet-ru-central1-a"
-  subnet_b_name       = "nextcloud-subnet-ru-central1-b"
+  subnet_e_name       = "nextcloud-subnet-ru-central1-e"
   subnet_d_name       = "nextcloud-subnet-ru-central1-d"
   subnet-a-cidr       = "192.168.11.0/24"
-  subnet-b-cidr       = "192.168.12.0/24"
+  subnet-e-cidr       = "192.168.12.0/24"
   subnet-d-cidr       = "192.168.13.0/24"
   sg_name             = "nextcloud-sg"
   gw_name             = "nextcloud-gateway"
@@ -100,11 +100,11 @@ resource "yandex_vpc_subnet" "nextcloud-subnet-a" {
   route_table_id = yandex_vpc_route_table.nextcloud-rt-table.id
 }
 
-resource "yandex_vpc_subnet" "nextcloud-subnet-b" {
-  name           = local.subnet_b_name
-  zone           = "ru-central1-b"
+resource "yandex_vpc_subnet" "nextcloud-subnet-e" {
+  name           = local.subnet_e_name
+  zone           = "ru-central1-e"
   network_id     = yandex_vpc_network.nextcloud-network.id
-  v4_cidr_blocks = [local.subnet-b-cidr]
+  v4_cidr_blocks = [local.subnet-e-cidr]
   route_table_id = yandex_vpc_route_table.nextcloud-rt-table.id
 }
 
@@ -253,8 +253,8 @@ resource "yandex_mdb_mysql_cluster" "nextcloud-cluster" {
   }
 
   host {
-    zone      = "ru-central1-b"
-    subnet_id = yandex_vpc_subnet.nextcloud-subnet-b.id
+    zone      = "ru-central1-e"
+    subnet_id = yandex_vpc_subnet.nextcloud-subnet-e.id
   }
 
   host {
@@ -355,7 +355,7 @@ resource "yandex_compute_instance_group" "nextcloud-ig" {
     }
 
     network_interface {
-      subnet_ids         = [yandex_vpc_subnet.nextcloud-subnet-a.id,yandex_vpc_subnet.nextcloud-subnet-b.id,yandex_vpc_subnet.nextcloud-subnet-d.id]
+      subnet_ids         = [yandex_vpc_subnet.nextcloud-subnet-a.id,yandex_vpc_subnet.nextcloud-subnet-e.id,yandex_vpc_subnet.nextcloud-subnet-d.id]
       security_group_ids = [yandex_vpc_security_group.nextcloud-sg.id]
     }
 
@@ -371,7 +371,7 @@ resource "yandex_compute_instance_group" "nextcloud-ig" {
   }
 
   allocation_policy {
-    zones = ["ru-central1-a","ru-central1-b","ru-central1-d"]
+    zones = ["ru-central1-a","ru-central1-e","ru-central1-d"]
   }
 
   deploy_policy {
@@ -445,8 +445,8 @@ resource "yandex_alb_load_balancer" "nextcloud-alb" {
       subnet_id = yandex_vpc_subnet.nextcloud-subnet-a.id
     }
     location {
-      zone_id   = "ru-central1-b"
-      subnet_id = yandex_vpc_subnet.nextcloud-subnet-b.id
+      zone_id   = "ru-central1-e"
+      subnet_id = yandex_vpc_subnet.nextcloud-subnet-e.id
     }
     location {
       zone_id   = "ru-central1-d"
